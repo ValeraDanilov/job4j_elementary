@@ -12,11 +12,13 @@ public class SqAreaTest {
         double result = 1.0;
         double out = SqArea.square(perimeter, ratio);
         Assert.assertEquals(result, out, 0.01);
-
-        perimeter = 6;
-        ratio = 2;
-        result = 2.0;
-        out = SqArea.square(perimeter, ratio);
+    }
+        @Test
+        public void squareOne() {
+        int perimeter = 6;
+        int ratio = 2;
+        double result = 2.0;
+        double out = SqArea.square(perimeter, ratio);
         Assert.assertEquals(result, out, 0.01);
     }
 }
