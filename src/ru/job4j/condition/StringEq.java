@@ -9,7 +9,10 @@ public class StringEq {
 
     public static void main(String[] args) {
         String your = "your_name";
+        String name = "root";
         boolean userHasAccess = StringEq.check(your);
+        boolean userHasAccessOne = StringEq.check(name);
         System.out.println(userHasAccess);
+        System.out.println(userHasAccessOne);
     }
 }
