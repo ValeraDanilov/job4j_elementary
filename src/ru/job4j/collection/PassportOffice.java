@@ -10,8 +10,8 @@ public class PassportOffice {
         boolean rsl = false;
         if (!map.containsKey(citizen.getPassport())) {
             map.put(citizen.getPassport(), citizen);
+            rsl = true;
         }
-
         return rsl;
     }
     public Citizen get(String passport) {
