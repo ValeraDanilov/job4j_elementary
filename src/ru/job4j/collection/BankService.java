@@ -6,15 +6,17 @@ public class BankService {
     private Map<User, List<AccountBank>> users = new HashMap<>();
 
     public void addUser(User user) {
-       if (!users.containsKey(user)) {
-           users.put(user, new ArrayList<AccountBank>());
-       }
+        users.putIfAbsent(user, new ArrayList<AccountBank>());
     }
     public void addAccount(String passport, AccountBank account) {
         User user = findByPassport(passport);
-        List<AccountBank> list = users.get(user);
-        list.add(account);
-        users.putIfAbsent(user, list);
+        if (user != null) {
+            List<AccountBank> list = users.get(user);
+            if (!list.contains(account)) {
+                list.add(account);
+                users.putIfAbsent(user, list);
+            }
+        }
     }
 
     public User findByPassport(String passport) {
@@ -22,6 +24,7 @@ public class BankService {
         for (User key: users.keySet()) {
             if (key.getPassport().equals(passport)) {
                 user = key;
+                break;
             }
         }
         return user;
@@ -32,17 +35,19 @@ public class BankService {
         if (user != null) {
             List<AccountBank> list = users.get(user);
             int index = list.indexOf(new AccountBank(requisite, -1));
-             account = list.get(index);
+            if (index != -1) {
+                account = list.get(index);
+            }
         }
         return account;
     }
     public boolean transferMoney(String srcPassport, String srcRequisite, String destPassport, String dеstRequisite, double amount) {
         boolean rsl = false;
-        AccountBank account = findByRequisite(srcPassport, srcRequisite);
-        AccountBank secondAccount = findByRequisite(destPassport, dеstRequisite);
-        if (account != null && destPassport != null && account.getBalance() >= amount ) {
-            account.setBalance(account.getBalance() - amount);
-            secondAccount.setBalance(secondAccount.getBalance() + amount);
+        AccountBank accountTransferring = findByRequisite(srcPassport, srcRequisite);
+        AccountBank receivingAccount = findByRequisite(destPassport, dеstRequisite);
+        if (accountTransferring != null && destPassport != null && accountTransferring.getBalance() >= amount ) {
+            accountTransferring.setBalance(accountTransferring.getBalance() - amount);
+            receivingAccount.setBalance(receivingAccount.getBalance() + amount);
             rsl = true;
         }
         return rsl;
