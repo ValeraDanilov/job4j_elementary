@@ -44,7 +44,7 @@ public class JobTest {
     @Test
     public void whenCompatorByProrityAndName() {
         Comparator<Job> cmpPriorityName = new SortByPriorityAscending().thenComparing(new SortByNameAscending());
-        int rsl = cmpPriorityName.compare(new Job("Impl task", 0), new Job("Fix bug", 1));
-        assertThat(rsl, is(-1));
+        int rsl = cmpPriorityName.compare(new Job("Impl task", 0), new Job("Fix bug", 0));
+        assertThat(rsl, is(3));
     }
 }
