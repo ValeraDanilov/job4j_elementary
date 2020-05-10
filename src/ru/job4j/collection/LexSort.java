@@ -6,6 +6,6 @@ public class LexSort implements Comparator<String> {
 
     @Override
     public int compare(String left, String right) {
-        return Integer.compare(left.length(), right.length());
+        return Integer.compare(Integer.parseInt(left.substring(0, left.indexOf('.'))), Integer.parseInt(right.substring(0, right.indexOf('.'))));
     }
 }
