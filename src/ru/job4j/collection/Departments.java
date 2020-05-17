@@ -17,26 +17,8 @@ public class Departments {
                 start += "/";
             }
         }
-        List<String> list = new ArrayList<>(tmp);
-        sortAsc(list);
-        return list;
+        return new ArrayList<>(tmp);
     }
-
-    public static List<String> fillGapsRevers(List<String> deps) {
-        HashSet<String> tmp = new HashSet<>();
-        for (String value : deps) {
-            String start = "";
-            for (String el : value.split("/")) {
-                start += el;
-                tmp.add(start);
-                start += "/";
-            }
-        }
-        List<String> list = new ArrayList<>(tmp);
-        sortDesc(list);
-        return list;
-    }
-
     public static void sortAsc(List<String> orgs){
         Collections.sort(orgs);
     }
