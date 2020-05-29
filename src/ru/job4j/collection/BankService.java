@@ -1,6 +1,7 @@
 package ru.job4j.collection;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BankService {
     private Map<User, List<AccountBank>> users = new HashMap<>();
@@ -8,6 +9,7 @@ public class BankService {
     public void addUser(User user) {
         users.putIfAbsent(user, new ArrayList<AccountBank>());
     }
+
     public void addAccount(String passport, AccountBank account) {
         User user = findByPassport(passport);
         if (user != null) {
@@ -17,28 +19,18 @@ public class BankService {
             }
         }
     }
-
     public User findByPassport(String passport) {
-        User user = null;
-        for (User key: users.keySet()) {
-            if (key.getPassport().equals(passport)) {
-                user = key;
-                break;
-            }
-        }
-        return user;
+        List<User> list = users.keySet().stream().filter(x -> x.getPassport().equals(passport)).collect(Collectors.toList());
+        return list.size() == 0 ? null: list.get(0);
     }
+
     public AccountBank findByRequisite(String passport, String requisite) {
         User user = findByPassport(passport);
-        AccountBank account = null;
         if (user != null) {
-            List<AccountBank> list = users.get(user);
-            int index = list.indexOf(new AccountBank(requisite, -1));
-            if (index != -1) {
-                account = list.get(index);
-            }
+            List<AccountBank> list = users.get(user).stream().filter(accountBank -> accountBank.getRequisite().equals(requisite)).collect(Collectors.toList());
+            return list.size() == 0? null: list.get(0);
         }
-        return account;
+        return null;
     }
     public boolean transferMoney(String srcPassport, String srcRequisite, String destPassport, String dеstRequisite, double amount) {
         boolean rsl = false;
