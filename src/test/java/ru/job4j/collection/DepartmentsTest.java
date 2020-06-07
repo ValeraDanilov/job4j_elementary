@@ -1,8 +1,10 @@
 package ru.job4j.collection;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import java.util.List;
-import static org.hamcrest.Matchers.is;
+
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class DepartmentsTest {
@@ -12,7 +14,7 @@ public class DepartmentsTest {
         List<String> expect = List.of("k1", "k1/sk1");
         List<String> result = Departments.fillGaps(input);
         Departments.sortAsc(result);
-        assertThat(result, is(expect));
+        assertThat(result, CoreMatchers.is(expect));
     }
 
     @Test
